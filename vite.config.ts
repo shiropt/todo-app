@@ -1,7 +1,11 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+// vite.config.ts
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc'; // @vitejs/plugin-reactを@vitejs/plugin-react-swcに変更
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react({ babel: { babelrc: true } })],
+  plugins: [
+    react({
+    plugins: [["@swc/plugin-styled-components", {displayName: true, ssr: false,fileName:false ,pure:true}]],
+    }),
+  ],
 });
