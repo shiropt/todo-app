@@ -15,11 +15,14 @@
     "styled-components": "^6.1.8"
   },
   "devDependencies": {
+    "@swc/core": "^1.4.12",
+    "@swc/plugin-styled-components": "^1.5.122",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.6.0",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
