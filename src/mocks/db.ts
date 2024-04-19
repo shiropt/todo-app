@@ -7,7 +7,7 @@ export const db = factory({
     status: Number,
     description: String,
     deadline: String,
-    createdAt: String,
-    updatedAt: String,
+    created_at: String,
+    updated_at: String,
   },
 });
