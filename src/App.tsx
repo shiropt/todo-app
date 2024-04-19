@@ -1,52 +1,20 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import styled from "styled-components";
-const Logo = styled.img`
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-
-  &:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  &.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
-  }
-`;
+import { useGetTodoListQuery } from "./modules/todo/api";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { data, error, isLoading } = useGetTodoListQuery("");
 
-  useEffect(() => {
-    fetch("/todos")
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-  }, []);
+  if (isLoading)
+    return <div style={{ color: "red", background: "blue" }}>Loading...</div>;
+  if (error) return <div>Error:</div>;
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <Logo src={viteLogo} alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <Logo src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {data?.data.map((todo) => (
+        <div key={todo.id}>
+          <h2>{todo.title}</h2>
+          <p>{todo.description}</p>
+        </div>
+      ))}
     </>
   );
 }
