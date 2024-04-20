@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { GlobalStyle } from "./styles/global.ts";
+import { Provider } from "react-redux";
+import { store } from "./store.ts";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -16,8 +18,10 @@ async function enableMocking() {
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-      <GlobalStyle />
-      <App />
+      <Provider store={store}>
+        <GlobalStyle />
+        <App />
+      </Provider>
     </React.StrictMode>
   );
 });
