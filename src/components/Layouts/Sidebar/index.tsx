@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { aliases } from "../../../styles/variables";
 import { Icon } from "../../atoms/Icon";
 import type { IconPath } from "../../atoms/Icon";
-import { Menu } from "../../molecules/Menus";
+import { Menu } from "../../molecules/Menu";
 
 export type Menu = {
   title: string;
