@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { aliases } from "../../../styles/variables";
 import { Icon } from "../../atoms/Icon";
 import type { IconPath } from "../../atoms/Icon";
+import { Menu } from "../../molecules/Menus";
 
 export type Menu = {
   title: string;
@@ -24,7 +25,7 @@ export const Sidebar: FC<Props> = ({ className, menus }) => {
       <nav>
         <ul>
           {menus.map((menu) => {
-            return <li key={menu.to}>{menu.title}</li>;
+            return <Menu key={menu.to} {...menu} />;
           })}
         </ul>
       </nav>
