@@ -1,5 +1,5 @@
 export const SOFT_GREY = "#f3f4f6;";
-export const TRANSLUCENT_GREY = "#dbdcdf25;";
+export const TRANSLUCENT_GREY = "#fefcfc;";
 export const SLATE_GREY = "#6b7280;";
 export const INKY_BLACK = "#111827";
 
