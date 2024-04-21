@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { aliases } from "../../../styles/variables";
 
 type Menu = {
   title: string;
@@ -30,10 +31,10 @@ export const Sidebar: FC<Props> = ({ className, menus }) => {
 const StyledSidebar = styled.div`
   width: 180px;
   height: 100vh;
-  background-color: rgb(243 244 246 / 0.4);
-  border: 1px solid #e5e7eb;
+  background-color: ${aliases.backgroundColor};
+  border: ${aliases.border};
   > div {
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: ${aliases.border};
     padding: 16px;
     > p {
       font-weight: 700;
@@ -42,20 +43,20 @@ const StyledSidebar = styled.div`
     }
   }
   > div:hover {
-    background-color: #f3f4f6;
+    background-color: ${aliases.hoverBackgroundColor};
   }
   > nav {
     padding: 0 16px;
     > ul {
       > li {
         padding: 4px 8px;
-        color: #6b7280;
+        color: ${aliases.inActiveColor};
         border-radius: 4px;
         cursor: pointer;
       }
       > li:hover {
-        color: #111827;
-        background-color: #f3f4f6;
+        color: ${aliases.primaryColor};
+        background-color: ${aliases.hoverBackgroundColor};
       }
     }
   }
