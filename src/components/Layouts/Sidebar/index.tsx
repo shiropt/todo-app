@@ -37,13 +37,13 @@ const StyledSidebar = styled.div`
   width: 180px;
   height: 100vh;
   background-color: ${aliases.backgroundColor};
-  border: ${aliases.border};
+  border-right: ${aliases.border};
   > div {
+    height: 60px;
     display: flex;
     align-items: center;
     padding: 0 8px;
     border-bottom: ${aliases.border};
-    height: 60px;
     > p {
       font-weight: 700;
       cursor: pointer;
