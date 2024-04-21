@@ -8,8 +8,10 @@ import { mdiBellOutline } from "@mdi/js";
 import { mdiTrashCanOutline } from "@mdi/js";
 import { mdiNoteEditOutline } from "@mdi/js";
 import { mdiMagnify } from "@mdi/js";
-
 import { FC } from "react";
+
+export type IconPath = keyof typeof icons;
+export type IconSize = keyof typeof sizes;
 
 const icons = {
   mdiHomeOutline,
@@ -29,8 +31,8 @@ const sizes = {
 };
 
 export const Icon: FC<{
-  path: keyof typeof icons;
-  size?: keyof typeof sizes;
+  path: IconPath;
+  size?: IconSize;
 }> = ({ path, size = "medium" }) => {
   return <MdiIcon path={icons[path]} size={sizes[size]} />;
 };

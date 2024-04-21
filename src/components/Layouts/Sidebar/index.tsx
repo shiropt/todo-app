@@ -1,11 +1,13 @@
-import { FC } from "react";
+import type { FC } from "react";
 import styled from "styled-components";
 import { aliases } from "../../../styles/variables";
 import { Icon } from "../../atoms/Icon";
+import type { IconPath } from "../../atoms/Icon";
 
-type Menu = {
-  title: React.ReactNode;
+export type Menu = {
+  title: string;
   to: string;
+  path: IconPath;
 };
 type Props = {
   className: string;
@@ -52,24 +54,5 @@ const StyledSidebar = styled.div`
   }
   > nav {
     padding: 0 8px;
-    > ul {
-      > li {
-        padding: 4px 8px;
-        color: ${aliases.inActiveColor};
-        border-radius: 4px;
-        cursor: pointer;
-        > a {
-          > svg,
-          span {
-            vertical-align: middle;
-            margin: 0 4px;
-          }
-        }
-      }
-      > li:hover {
-        color: ${aliases.primaryColor};
-        background-color: ${aliases.hoverBackgroundColor};
-      }
-    }
   }
 `;
