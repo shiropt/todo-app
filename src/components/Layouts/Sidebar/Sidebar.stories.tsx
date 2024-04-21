@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Sidebar } from ".";
+import { Icon } from "../../atoms/Icon";
 
 const meta = {
   title: "layouts/Sidebar",
@@ -17,10 +18,42 @@ export const Default: Story = {
   args: {
     className: "sidebar",
     menus: [
-      { title: "Home", to: "/home" },
-      { title: "Todos", to: "/todos" },
-      { title: "Calendar", to: "/calendar" },
-      { title: "Stats", to: "/stats" },
+      {
+        title: (
+          <a>
+            <Icon path="mdiHomeOutline" />
+            <span>Home</span>
+          </a>
+        ),
+        to: "/home",
+      },
+      {
+        title: (
+          <a>
+            <Icon path="mdiFileTreeOutline" />
+            <span>Todos</span>
+          </a>
+        ),
+        to: "/todos",
+      },
+      {
+        title: (
+          <a>
+            <Icon path="mdiCalendarTextOutline" />
+            <span>Calendar</span>
+          </a>
+        ),
+        to: "/calendar",
+      },
+      {
+        title: (
+          <a>
+            <Icon path="mdiChartBellCurveCumulative" />
+            <span>Stats</span>
+          </a>
+        ),
+        to: "/stats",
+      },
     ],
   },
 };
