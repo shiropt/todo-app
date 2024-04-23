@@ -6,8 +6,7 @@ import type { Menu as MenuType } from "../../Layouts/Sidebar";
 
 type Props = MenuType;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Menu: FC<Props> = ({ path, title, to }) => {
+export const Menu: FC<Props> = ({ path, title }) => {
   return (
     <StyledMenu>
       <a>
