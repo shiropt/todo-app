@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest"
+    "test": "yarn typecheck && yarn lint &&  yarn vitest",
+    "vitest": "vitest",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
