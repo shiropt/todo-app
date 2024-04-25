@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { aliases } from "../../../styles/variables";
 import { IconButton } from "../../atoms/IconButton";
 
 type Props = {
@@ -21,8 +20,8 @@ export const Header: FC<Props> = ({ className }) => {
 
 const StyledHeader = styled.header`
   height: 60px;
-  background-color: ${aliases.backgroundColor};
-  border-bottom: ${aliases.border};
+  background-color: ${({ theme }) => theme.background.main};
+  border-bottom: ${({ theme }) => theme.border};
   display: flex;
   align-items: center;
   justify-content: space-between;

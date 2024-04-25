@@ -1,8 +1,7 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { aliases } from "../../../styles/variables";
-import { Icon } from "../../atoms/Icon";
 import type { IconPath } from "../../atoms/Icon";
+import { Icon } from "../../atoms/Icon";
 import { Menu } from "../../molecules/Menu";
 
 export type Menu = {
@@ -34,16 +33,16 @@ export const Sidebar: FC<Props> = ({ className, menus }) => {
 };
 
 const StyledSidebar = styled.div`
+  background-color: ${({ theme }) => theme.background.main};
   width: 180px;
   height: 100vh;
-  background-color: ${aliases.backgroundColor};
-  border-right: ${aliases.border};
+  border-right: ${({ theme }) => theme.border};
   > div {
     height: 60px;
     display: flex;
     align-items: center;
     padding: 0 8px;
-    border-bottom: ${aliases.border};
+    border-bottom: ${({ theme }) => theme.border};
     > p {
       font-weight: 700;
       cursor: pointer;
@@ -51,7 +50,7 @@ const StyledSidebar = styled.div`
     }
   }
   > div:hover {
-    background-color: ${aliases.hoverBackgroundColor};
+    background: ${({ theme }) => theme.background.hover};
   }
   > nav {
     padding: 0 8px;

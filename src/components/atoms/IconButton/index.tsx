@@ -1,7 +1,6 @@
 import type { ComponentProps, FC } from "react";
-import { Icon, IconPath } from "../Icon";
 import styled from "styled-components";
-import { aliases } from "../../../styles/variables";
+import { Icon, IconPath } from "../Icon";
 
 type Props = {
   className?: string;
@@ -19,7 +18,7 @@ export const IconButton: FC<Props> = ({ className, path, rounded = false }) => {
 
 const StyledIconButton = styled.button<Pick<Props, "rounded">>`
   background-color: white;
-  border: ${aliases.border};
+  border: ${({ theme }) => theme.border};
   border-radius: ${({ rounded }) => (rounded ? "50%" : "8px")};
   padding: 6px 8px;
 `;

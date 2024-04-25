@@ -1,7 +1,6 @@
+import { FC } from "react";
 import styled from "styled-components";
 import { Todo } from "../../../modules/todo/type";
-import { aliases } from "../../../styles/variables";
-import { FC } from "react";
 import { IconButton } from "../../atoms/IconButton";
 
 type Props = {
@@ -25,11 +24,11 @@ export const Card: FC<Props> = ({ className, todo }) => {
 };
 
 const StyledCard = styled.div`
-  border: ${aliases.border};
+  border: ${({ theme }) => theme.border};
   padding: 8px;
   border-radius: 8px;
   &:hover {
-    background: ${aliases.hoverBackgroundColor};
+    background: ${({ theme }) => theme.background.hover};
   }
   > div {
     display: flex;
