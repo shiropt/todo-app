@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useGetTodoListQuery } from "../../../modules/todo/api";
 import { Card } from "../../molecules/Card";
+import { LoadingSpinner } from "../../atoms/Loading";
 
 export const Todos = () => {
   const { data, error, isLoading } = useGetTodoListQuery("");
-  if (isLoading)
-    return <div style={{ color: "red", background: "blue" }}>Loading...</div>;
+  if (isLoading) return <LoadingSpinner withOverlay />;
   if (error) return <div>Error:</div>;
 
   return (
