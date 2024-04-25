@@ -1,18 +1,33 @@
 import type { FC } from "react";
 import styled from "styled-components";
 import { IconButton } from "../../atoms/IconButton";
+import * as Avatar from "@radix-ui/react-avatar";
 
 type Props = {
   className: string;
+  src?: string;
+  alt?: string;
 };
 
-export const Header: FC<Props> = ({ className }) => {
+const StyledAvatar = styled(Avatar.Image)`
+  width: 26px;
+  height: 26px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+export const Header: FC<Props> = ({ className, src, alt }) => {
   return (
     <StyledHeader className={className}>
       <IconButton path="mdiMagnify" rounded />
       <div>
         <IconButton path="mdiBellOutline" rounded />
-        <IconButton path="mdiAccountOutline" rounded />
+        <Avatar.Root>
+          <StyledAvatar className={className} alt={alt} src={src} />
+          <Avatar.Fallback>
+            <IconButton path="mdiAccountOutline" rounded />
+          </Avatar.Fallback>
+        </Avatar.Root>
       </div>
     </StyledHeader>
   );
@@ -31,8 +46,12 @@ const StyledHeader = styled.header`
     margin-left: 16px;
   }
   > div {
+    display: flex;
     margin-right: 8px;
-    button {
+    align-items: center;
+    button,
+    img {
+      display: block;
       margin: 0 8px;
     }
   }
