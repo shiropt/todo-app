@@ -1,8 +1,7 @@
 import type { FC } from "react";
-import { Icon } from "../../atoms/Icon";
 import styled from "styled-components";
-import { aliases } from "../../../styles/variables";
 import type { Menu as MenuType } from "../../Layouts/Sidebar";
+import { Icon } from "../../atoms/Icon";
 
 type Props = MenuType;
 
@@ -19,12 +18,12 @@ export const Menu: FC<Props> = ({ path, title }) => {
 
 const StyledMenu = styled.li`
   padding: 4px 8px;
-  color: ${aliases.inActiveColor};
+  color: ${({ theme }) => theme.colors.passive};
   border-radius: 4px;
   cursor: pointer;
   &:hover {
-    color: ${aliases.primaryColor};
-    background-color: ${aliases.hoverBackgroundColor};
+    color: ${({ theme }) => theme.colors.active};
+    background-color: ${({ theme }) => theme.background.hover};
   }
   > a {
     > svg,
