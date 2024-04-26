@@ -8,7 +8,8 @@ export const theme = {
     passive: blackA.blackA8,
   },
   background: {
-    hover: gray.gray3,
+    hover: gray.gray4,
+    active: gray.gray3,
     main: gray.gray1,
   },
   border: `1px solid ${gray.gray3} ;`,
