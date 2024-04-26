@@ -1,26 +1,23 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import type { IconPath } from "../../atoms/Icon";
 import { Icon } from "../../atoms/Icon";
 import { Menu } from "../../molecules/Menu";
+import { Link } from "wouter";
+import { paths } from "../../../routes/path";
+import { Menus } from "../../../routes/navigation";
 
-export type Menu = {
-  title: string;
-  to: string;
-  path: IconPath;
-};
 type Props = {
-  className: string;
-  menus: Menu[];
+  className?: string;
+  menus: Menus;
 };
 
 export const Sidebar: FC<Props> = ({ className, menus }) => {
   return (
     <StyledSidebar className={className}>
-      <div>
+      <Link to={paths.home}>
         <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="large" />
         <p>Acme Inc</p>
-      </div>
+      </Link>
       <nav>
         <ul>
           {menus.map((menu) => {
@@ -37,7 +34,7 @@ const StyledSidebar = styled.div`
   width: 180px;
   height: 100vh;
   border-right: ${({ theme }) => theme.border};
-  > div {
+  > a {
     height: 60px;
     display: flex;
     align-items: center;
@@ -51,8 +48,5 @@ const StyledSidebar = styled.div`
   }
   > div:hover {
     background: ${({ theme }) => theme.background.hover};
-  }
-  > nav {
-    padding: 0 8px;
   }
 `;
