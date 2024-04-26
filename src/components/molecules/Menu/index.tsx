@@ -1,35 +1,45 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import type { Menu as MenuType } from "../../Layouts/Sidebar";
 import { Icon } from "../../atoms/Icon";
+import { Link } from "wouter";
+import { Menus } from "../../../routes/navigation";
 
-type Props = MenuType;
+type Props = Menus[number];
 
-export const Menu: FC<Props> = ({ path, title }) => {
+export const Menu: FC<Props> = ({ icon, title, to }) => {
   return (
     <StyledMenu>
-      <a>
-        <Icon path={path} />
+      <Link className={(active) => (active ? "active" : "")} to={to}>
+        <Icon icon={icon} />
         <span>{title}</span>
-      </a>
+      </Link>
     </StyledMenu>
   );
 };
 
 const StyledMenu = styled.li`
-  padding: 4px 8px;
   color: ${({ theme }) => theme.colors.passive};
   border-radius: 4px;
   cursor: pointer;
-  &:hover {
-    color: ${({ theme }) => theme.colors.active};
-    background-color: ${({ theme }) => theme.background.hover};
-  }
   > a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 8px;
+    /* padding: inherit; li 要素の padding を継承 */
     > svg,
     span {
       vertical-align: middle;
       margin: 0 4px;
     }
+  }
+  > a:hover {
+    color: ${({ theme }) => theme.colors.active};
+    background: ${({ theme }) => theme.background.hover};
+    transition: background 0.3s;
+  }
+  .active {
+    color: ${({ theme }) => theme.colors.active};
+    background-color: ${({ theme }) => theme.background.active};
   }
 `;

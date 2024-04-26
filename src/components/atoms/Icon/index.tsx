@@ -12,7 +12,7 @@ import { mdiAccountOutline } from "@mdi/js";
 
 import { FC } from "react";
 
-export type IconPath = keyof typeof icons;
+export type Icon = keyof typeof icons;
 export type IconSize = keyof typeof sizes;
 
 const icons = {
@@ -34,8 +34,8 @@ const sizes = {
 };
 
 export const Icon: FC<{
-  path: IconPath;
+  icon: Icon;
   size?: IconSize;
-}> = ({ path, size = "medium" }) => {
-  return <MdiIcon path={icons[path]} size={sizes[size]} />;
+}> = ({ icon, size = "medium" }) => {
+  return <MdiIcon path={icons[icon]} size={sizes[size]} />;
 };

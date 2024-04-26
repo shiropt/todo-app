@@ -14,8 +14,8 @@ export const Card: FC<Props> = ({ className, todo }) => {
       <div>
         <h2>{todo.title}</h2>
         <div>
-          <IconButton path="mdiNoteEditOutline" />
-          <IconButton path="mdiTrashCanOutline" />
+          <IconButton icon="mdiNoteEditOutline" />
+          <IconButton icon="mdiTrashCanOutline" />
         </div>
       </div>
       <p>{todo.description}</p>

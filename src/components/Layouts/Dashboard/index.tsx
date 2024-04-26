@@ -1,27 +1,16 @@
 import styled from "styled-components";
 import { Header } from "../Header";
 import { Sidebar } from "../Sidebar";
-import { Todos } from "../../pages/Todos";
+import { Main } from "../../pages/main";
+import { menus } from "../../../routes/navigation";
 
 export const Dashboard = () => {
   return (
     <StyledDashboard>
-      <Sidebar
-        className="sidebar"
-        menus={[
-          { title: "Home", to: "/home", path: "mdiHomeOutline" },
-          { title: "Todos", to: "/todos", path: "mdiFileTreeOutline" },
-          {
-            title: "Calendar",
-            to: "/calendar",
-            path: "mdiCalendarTextOutline",
-          },
-          { title: "Stats", to: "/stats", path: "mdiChartBellCurveCumulative" },
-        ]}
-      />
+      <Sidebar menus={menus} />
       <div>
-        <Header className="header" />
-        <Todos />
+        <Header />
+        <Main />
       </div>
     </StyledDashboard>
   );
