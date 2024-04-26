@@ -18,7 +18,7 @@ export const Sidebar: FC<Props> = ({ className, menus }) => {
   return (
     <StyledSidebar className={className}>
       <div>
-        <Icon path="mdiCheckboxMarkedCircleAutoOutline" size="large" />
+        <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="large" />
         <p>Acme Inc</p>
       </div>
       <nav>

@@ -9,7 +9,7 @@ export const Menu: FC<Props> = ({ path, title }) => {
   return (
     <StyledMenu>
       <a>
-        <Icon path={path} />
+        <Icon icon={icon} />
         <span>{title}</span>
       </a>
     </StyledMenu>

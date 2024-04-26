@@ -4,7 +4,7 @@ import { IconButton } from "../../atoms/IconButton";
 import * as Avatar from "@radix-ui/react-avatar";
 
 type Props = {
-  className: string;
+  className?: string;
   src?: string;
   alt?: string;
 };
@@ -19,13 +19,13 @@ const StyledAvatar = styled(Avatar.Image)`
 export const Header: FC<Props> = ({ className, src, alt }) => {
   return (
     <StyledHeader className={className}>
-      <IconButton path="mdiMagnify" rounded />
+      <IconButton icon="mdiMagnify" rounded />
       <div>
-        <IconButton path="mdiBellOutline" rounded />
+        <IconButton icon="mdiBellOutline" rounded />
         <Avatar.Root>
           <StyledAvatar className={className} alt={alt} src={src} />
           <Avatar.Fallback>
-            <IconButton path="mdiAccountOutline" rounded />
+            <IconButton icon="mdiAccountOutline" rounded />
           </Avatar.Fallback>
         </Avatar.Root>
       </div>

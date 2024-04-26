@@ -1,17 +1,17 @@
 import type { ComponentProps, FC } from "react";
 import styled from "styled-components";
-import { Icon, IconPath } from "../Icon";
+import { Icon } from "../Icon";
 
 type Props = {
   className?: string;
-  path: IconPath;
+  icon: Icon;
   rounded?: boolean;
 } & ComponentProps<"button">;
 
-export const IconButton: FC<Props> = ({ className, path, rounded = false }) => {
+export const IconButton: FC<Props> = ({ className, icon, rounded = false }) => {
   return (
     <StyledIconButton rounded={rounded} className={className}>
-      <Icon path={path}></Icon>
+      <Icon icon={icon}></Icon>
     </StyledIconButton>
   );
 };

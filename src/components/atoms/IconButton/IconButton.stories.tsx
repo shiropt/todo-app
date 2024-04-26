@@ -16,13 +16,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     className: "iconButton",
-    path: "mdiBellOutline",
+    icon: "mdiBellOutline",
   },
 };
 export const Rounded: Story = {
   args: {
     className: "iconButton",
     rounded: true,
-    path: "mdiBellOutline",
+    icon: "mdiBellOutline",
   },
 };

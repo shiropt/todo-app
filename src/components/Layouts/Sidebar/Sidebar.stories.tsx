@@ -17,10 +17,10 @@ export const Default: Story = {
   args: {
     className: "sidebar",
     menus: [
-      { title: "Home", to: "/home", path: "mdiHomeOutline" },
-      { title: "Todos", to: "/todos", path: "mdiFileTreeOutline" },
-      { title: "Calendar", to: "/calendar", path: "mdiCalendarTextOutline" },
-      { title: "Stats", to: "/stats", path: "mdiChartBellCurveCumulative" },
+      { title: "Home", to: "/home", icon: "mdiHomeOutline" },
+      { title: "Todos", to: "/todos", icon: "mdiFileTreeOutline" },
+      { title: "Calendar", to: "/calendar", icon: "mdiCalendarTextOutline" },
+      { title: "Stats", to: "/stats", icon: "mdiChartBellCurveCumulative" },
     ],
   },
 };
