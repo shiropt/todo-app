@@ -14,7 +14,7 @@ export default function (plop: NodePlopAPI) {
         type: "list",
         name: "directory",
         message: "select component directory",
-        choices: ["atoms", "molecules", "organisms", "layouts", "pages"],
+        choices: ["atoms", "molecules", "organisms", "Layouts", "pages"],
       },
       {
         type: "confirm", // 新しいプロンプトのタイプは"confirm"です
