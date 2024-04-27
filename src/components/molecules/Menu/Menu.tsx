@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { Icon } from "../../atoms/Icon";
+import { Icon } from "@/components/atoms/Icon";
 import { Link } from "wouter";
-import { Menus } from "../../../routes/navigation";
+import { Menus } from "@/routes/navigation";
 
 type Props = Menus[number];
 

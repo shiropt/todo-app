@@ -1,4 +1,4 @@
-import { paths } from "./path";
+import { paths } from "@/routes/path";
 
 export const menus = [
   { title: "Home", to: `${paths.home}`, icon: "mdiHomeOutline" },

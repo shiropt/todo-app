@@ -1,5 +1,5 @@
+import { Button } from "@/components/atoms/Button/Button";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react";
-import { Button } from ".";
 import styled from "styled-components";
 
 const meta = {

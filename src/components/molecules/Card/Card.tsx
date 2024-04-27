@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
-import { Todo } from "../../../modules/todo/type";
-import { IconButton } from "../../atoms/IconButton";
+import type { Todo } from "@/modules/todo/type";
+import { IconButton } from "@/components/atoms/IconButton";
 
 type Props = {
   className?: string;
