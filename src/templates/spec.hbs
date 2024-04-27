@@ -1,0 +1,10 @@
+import { render } from "@testing-library/react";
+import { {{properCase name}} } from ".";
+
+describe("unit testing of {{properCase name}}", () => {
+  it("test case", () => {
+    const label = "Click me";
+    const { getByText } = render(<{{properCase name }} />);
+    expect(getByText(label)).toBeTruthy();
+  });
+});
