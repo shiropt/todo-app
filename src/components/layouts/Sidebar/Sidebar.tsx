@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { Icon } from "../../atoms/Icon";
-import { Menu } from "../../molecules/Menu";
+import { Icon } from "@/components/atoms/Icon";
+import { Menu } from "@/components/molecules/Menu";
 import { Link } from "wouter";
-import { paths } from "../../../routes/path";
-import { Menus } from "../../../routes/navigation";
+import { paths } from "@/routes/path";
+import type { Menus } from "@/routes/navigation";
 
 type Props = {
   className?: string;

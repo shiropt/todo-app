@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Header } from "../Header";
-import { Sidebar } from "../Sidebar";
-import { Main } from "../../pages/main";
-import { menus } from "../../../routes/navigation";
+import { Header } from "@/components/layouts/Header";
+import { Sidebar } from "@/components/layouts/Sidebar";
+import { Main } from "@/components/pages/main";
+import { menus } from "@/routes/navigation";
 import { FC } from "react";
 
 export const Dashboard: FC = () => {

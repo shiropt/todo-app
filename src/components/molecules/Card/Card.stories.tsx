@@ -1,5 +1,5 @@
+import { Card } from "@/components/molecules/Card/Card";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Card } from ".";
 
 const meta = {
   title: "molecules/Card",

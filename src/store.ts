@@ -1,6 +1,6 @@
+import { todoApi } from "@/modules/todo/api";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { todoApi } from "./modules/todo/api";
 
 export const store = configureStore({
   reducer: {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useGetTodoListQuery } from "../../../modules/todo/api";
-import { Card } from "../../molecules/Card";
-import { LoadingSpinner } from "../../atoms/Loading";
+import { useGetTodoListQuery } from "@/modules/todo/api";
+import { Card } from "@/components/molecules/Card";
+import { LoadingSpinner } from "@/components/atoms/Loading";
 
 export const Todos = () => {
   const { data, error, isLoading } = useGetTodoListQuery("");

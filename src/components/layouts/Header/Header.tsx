@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import styled from "styled-components";
-import { IconButton } from "../../atoms/IconButton";
+import { IconButton } from "@/components/atoms/IconButton";
 import * as Avatar from "@radix-ui/react-avatar";
 
 type Props = {

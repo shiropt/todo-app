@@ -1,6 +1,6 @@
 import type { ComponentProps, FC } from "react";
 import styled from "styled-components";
-import { Icon } from "../Icon";
+import { Icon } from "@/components/atoms/Icon";
 
 type Props = {
   className?: string;

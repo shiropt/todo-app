@@ -1,7 +1,7 @@
 import { Route, Switch } from "wouter";
-import { paths } from "../../routes/path";
-import { Todos } from "./Todos";
+import { paths } from "@/routes/path";
 import { FC } from "react";
+import { Todos } from "@/components/pages/Todos";
 
 export const Main: FC = () => {
   return (

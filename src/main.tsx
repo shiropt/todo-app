@@ -3,9 +3,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { GlobalStyle } from "./styles/global.ts";
 import { Provider } from "react-redux";
-import { store } from "./store.ts";
 import { ThemeProvider } from "styled-components";
-import { theme } from "./styles/variables.ts";
+import { store } from "@/store.ts";
+import { theme } from "@/styles/variables.ts";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
