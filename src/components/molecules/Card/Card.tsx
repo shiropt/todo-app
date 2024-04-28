@@ -12,29 +12,32 @@ export const Card: FC<Props> = ({ className, todo }) => {
   return (
     <StyledCard className={className}>
       <div>
-        <h2>{todo.title}</h2>
+        <p>{todo.title}</p>
         <div>
           <IconButton icon="mdiNoteEditOutline" />
           <IconButton icon="mdiTrashCanOutline" />
         </div>
       </div>
-      <p>{todo.description}</p>
+      {/* <p>{todo.description}</p> */}
     </StyledCard>
   );
 };
 
 const StyledCard = styled.div`
-  border: ${({ theme }) => theme.border};
+  cursor: pointer;
   padding: 8px;
-  border-radius: 8px;
+  border-bottom: ${({ theme }) => theme.border};
+  border-radius: 4px;
   &:hover {
     background: ${({ theme }) => theme.background.hover};
   }
   > div {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    h2 {
+    p {
       margin: 0;
+      font-weight: bold;
     }
     > div {
       > button {
