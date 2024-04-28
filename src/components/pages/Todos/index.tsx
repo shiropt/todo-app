@@ -21,11 +21,4 @@ export const Todos = () => {
   );
 };
 
-const StyledTodos = styled.div`
-  > ul {
-    padding: 0 24px;
-    > li {
-      margin-bottom: 24px;
-    }
-  }
-`;
+const StyledTodos = styled.div``;
