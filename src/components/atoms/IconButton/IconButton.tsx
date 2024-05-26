@@ -20,6 +20,7 @@ export const IconButton: FC<Props> = ({
 }) => {
   return (
     <RadixIconButton
+      style={{ cursor: "pointer" }}
       color={color}
       radius={radius}
       size={size}
