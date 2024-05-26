@@ -1,24 +1,32 @@
 import type { ComponentProps, FC } from "react";
-import styled from "styled-components";
 import { Icon } from "@/components/atoms/Icon";
+import {
+  IconButtonProps,
+  IconButton as RadixIconButton,
+} from "@radix-ui/themes";
 
 type Props = {
-  className?: string;
   icon: Icon;
-  rounded?: boolean;
-} & ComponentProps<"button">;
+} & ComponentProps<"button"> &
+  IconButtonProps;
 
-export const IconButton: FC<Props> = ({ className, icon, rounded = false }) => {
+export const IconButton: FC<Props> = ({
+  icon,
+  color = "gray",
+  radius = "full",
+  size = "2",
+  variant = "outline",
+  ...props
+}) => {
   return (
-    <StyledIconButton rounded={rounded} className={className}>
-      <Icon icon={icon}></Icon>
-    </StyledIconButton>
+    <RadixIconButton
+      color={color}
+      radius={radius}
+      size={size}
+      variant={variant}
+      {...props}
+    >
+      <Icon icon={icon} />
+    </RadixIconButton>
   );
 };
-
-const StyledIconButton = styled.button<Pick<Props, "rounded">>`
-  background-color: white;
-  border: ${({ theme }) => theme.border};
-  border-radius: ${({ rounded }) => (rounded ? "50%" : "8px")};
-  padding: 6px 8px;
-`;

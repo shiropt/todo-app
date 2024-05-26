@@ -19,10 +19,3 @@ export const Default: Story = {
     icon: "mdiBellOutline",
   },
 };
-export const Rounded: Story = {
-  args: {
-    className: "iconButton",
-    rounded: true,
-    icon: "mdiBellOutline",
-  },
-};
