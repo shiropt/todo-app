@@ -1,8 +1,10 @@
-import { theme } from "./../src/styles/variables";
-import { GlobalStyle } from "./../src/styles/global";
-import type { Preview } from "@storybook/react";
+import { theme } from "../src/styles/variables";
+import { GlobalStyle } from "../src/styles/global";
+import type { Decorator, Preview } from "@storybook/react";
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { Theme as RadixTheme } from "@radix-ui/themes";
+import React from "react";
 
 const preview: Preview = {
   parameters: {
@@ -15,7 +17,12 @@ const preview: Preview = {
   },
 };
 
-export const decorators = [
+export const decorators: Decorator[] = [
+  (Story) => (
+    <RadixTheme>
+      <Story />
+    </RadixTheme>
+  ),
   withThemeFromJSXProvider({
     themes: { light: theme },
     defaultTheme: "light",
