@@ -1,11 +1,14 @@
-import { theme } from "../src/styles/variables";
-import { GlobalStyle } from "../src/styles/global";
-import type { Decorator, Preview } from "@storybook/react";
-import { withThemeFromJSXProvider } from "@storybook/addon-themes";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { MantineProvider, createTheme } from "@mantine/core";
+import "@mantine/core/styles.css";
 import { Theme as RadixTheme } from "@radix-ui/themes";
+import { withThemeFromJSXProvider } from "@storybook/addon-themes";
+import type { Decorator, Preview } from "@storybook/react";
 import React from "react";
+import { GlobalStyle } from "../src/styles/global";
 
+export const theme = createTheme({
+  fontFamily: "serif",
+});
 const preview: Preview = {
   parameters: {
     controls: {
@@ -18,6 +21,9 @@ const preview: Preview = {
 };
 
 export const decorators: Decorator[] = [
+  (renderStory: any) => (
+    <MantineProvider theme={theme}>{renderStory()}</MantineProvider>
+  ),
   (Story) => (
     <RadixTheme>
       <Story />
@@ -27,7 +33,6 @@ export const decorators: Decorator[] = [
     themes: { light: theme },
     defaultTheme: "light",
     GlobalStyles: GlobalStyle,
-    Provider: ThemeProvider,
   }),
 ];
 
