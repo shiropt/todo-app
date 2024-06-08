@@ -1,5 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import "@radix-ui/themes/styles.css";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 
 export const GlobalStyle = createGlobalStyle`
   :root {
