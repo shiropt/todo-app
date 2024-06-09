@@ -1,5 +1,14 @@
 import { Header } from "@/components/layouts/Header/Header";
+import { AppShell } from "@mantine/core";
 import type { Meta, StoryObj } from "@storybook/react";
+
+const args = {
+  avatarImage: "",
+  mobileOpened: true,
+  desktopOpened: true,
+  toggleDesktop: () => {},
+  toggleMobile: () => {},
+};
 
 const meta = {
   title: "layouts/Header",
@@ -8,20 +17,18 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {},
   args: {},
+  render: () => {
+    return (
+      <AppShell>
+        <Header {...args}></Header>
+      </AppShell>
+    );
+  },
 } satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    className: "header",
-  },
-};
-export const WidthImage: Story = {
-  args: {
-    className: "header",
-    avatarImage:
-      "https://img.freepik.com/free-photo/portrait-young-woman-wearing-glasses-3d-rendering_1142-43632.jpg?size=626&ext=jpg",
-  },
+  args: { ...args },
 };

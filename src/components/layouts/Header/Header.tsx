@@ -1,37 +1,62 @@
-import { IconButton } from "@/components/atoms/IconButton";
-import { Avatar, Flex } from "@radix-ui/themes";
+import { ActionIcon } from "@/components/atoms/ActionIcon";
+import { Icon } from "@/components/atoms/Icon";
+import { paths } from "@/routes/path";
+import { AppShell, Avatar, Burger, Flex, Group, NavLink } from "@mantine/core";
 import type { FC } from "react";
-import styled from "styled-components";
+import { Link } from "wouter";
 
 type Props = {
-  className?: string;
   avatarImage?: string;
   alt?: string;
+  mobileOpened: boolean;
+  desktopOpened: boolean;
+  toggleDesktop: () => void;
+  toggleMobile: () => void;
 };
 
-export const Header: FC<Props> = ({ className, avatarImage, alt }) => {
+export const Header: FC<Props> = ({
+  avatarImage,
+  alt,
+  mobileOpened,
+  desktopOpened,
+  toggleDesktop,
+  toggleMobile,
+}) => {
   return (
-    <StyledHeader className={className}>
-      <Flex height="100%" justify="between" align="center">
-        <IconButton icon="mdiMagnify" />
-        <Flex align="center" gap="4">
-          <IconButton icon="mdiBellOutline" />
-          <Avatar
-            src={avatarImage}
-            alt={alt}
-            radius="full"
-            size="2"
-            fallback={<IconButton icon="mdiAccountOutline" />}
+    <AppShell.Header>
+      <Flex h="100%" align="center" justify="space-between">
+        <Group h="100%" px="md" gap={0}>
+          <Burger
+            opened={mobileOpened}
+            onClick={toggleMobile}
+            hiddenFrom="sm"
+            size="sm"
           />
+          <Burger
+            opened={desktopOpened}
+            onClick={toggleDesktop}
+            visibleFrom="sm"
+            size="sm"
+          />
+          <Link to={paths.home} style={{ textDecoration: "none" }}>
+            <NavLink
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+              href={paths.home}
+              label="Acme Inc"
+              leftSection={
+                <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="large" />
+              }
+            />
+          </Link>
+        </Group>
+        <Flex pr="sm" gap="sm" align="center">
+          <ActionIcon icon="mdiBellOutline" />
+          <Avatar src={avatarImage} alt={alt} size="sm" />
         </Flex>
       </Flex>
-    </StyledHeader>
+    </AppShell.Header>
   );
 };
-
-const StyledHeader = styled.header`
-  height: 60px;
-  padding: 0 16px;
-  background-color: ${({ theme }) => theme.background.main};
-  border-bottom: ${({ theme }) => theme.border};
-`;
