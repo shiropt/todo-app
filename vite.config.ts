@@ -9,12 +9,7 @@ export default defineConfig({
   },
   plugins: [
     react({
-      plugins: [
-        [
-          "@swc/plugin-styled-components",
-          { displayName: true, ssr: false, fileName: false, pure: true },
-        ],
-      ],
+      plugins: [],
     }),
     tsconfigPaths(),
   ],

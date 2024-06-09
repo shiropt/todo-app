@@ -1,37 +1,39 @@
-import styled from "styled-components";
 import { Header } from "@/components/layouts/Header";
-import { Sidebar } from "@/components/layouts/Sidebar";
 import { Main } from "@/components/pages/main";
 import { menus } from "@/routes/navigation";
 import { FC } from "react";
+import { AppShell } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { Sidebar } from "@/components/layouts/Sidebar";
+import { useSelector } from "@/libs/redux";
 
 export const Dashboard: FC = () => {
+  const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
+  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const isAsideOpen = useSelector((state) => state.ui.isAsideOpen);
+
   return (
-    <StyledDashboard>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{
+        width: 180,
+        breakpoint: "sm",
+        collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
+      }}
+      aside={{
+        width: 400,
+        breakpoint: "sm",
+        collapsed: { mobile: !isAsideOpen, desktop: !isAsideOpen },
+      }}
+    >
+      <Header
+        mobileOpened={mobileOpened}
+        desktopOpened={desktopOpened}
+        toggleDesktop={toggleDesktop}
+        toggleMobile={toggleMobile}
+      />
       <Sidebar menus={menus} />
-      <div>
-        <Header />
-        <Main />
-      </div>
-    </StyledDashboard>
+      <Main />
+    </AppShell>
   );
 };
-
-const StyledDashboard = styled.div`
-  display: flex;
-  > div:nth-child(1) {
-    position: sticky;
-    top: 0;
-    left: 0;
-  }
-  > div:nth-child(2) {
-    width: 100%;
-    > header {
-      position: sticky;
-      top: 0;
-    }
-    > div {
-      padding: 24px;
-    }
-  }
-`;

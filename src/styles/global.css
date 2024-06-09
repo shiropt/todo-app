@@ -1,24 +1,18 @@
-import { createGlobalStyle } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-  :root {
+:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
 
 body {
-  padding:0 !important;
-  margin:0;
+  padding: 0 !important;
+  margin: 0;
   box-sizing: border-box;
 }
 
-li{
+li {
   list-style: none;
 }
-ul{
+ul {
   padding: 0;
 }
-
-
-`;

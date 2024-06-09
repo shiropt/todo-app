@@ -1,15 +1,21 @@
-const todoStatus = {
-  DOING: 0,
-  DONE: 1,
-  HOLD: 2,
+export const todoStatus = {
+  0: { label: "In Progress", color: "orange" },
+  1: { label: "Complete", color: "green" },
+  2: { label: "Stay", color: "blue" },
 } as const;
 
-type Status = (typeof todoStatus)[keyof typeof todoStatus];
+export const STATUS = {
+  IN_PROGRESS: 0,
+  COMPLETE: 1,
+  STAY: 2,
+} as const;
+
+export type Status = (typeof todoStatus)[keyof typeof todoStatus]["label"];
 
 export type Todo = {
   id: string;
   title: string;
-  status: Status;
+  status: keyof typeof todoStatus;
   description: string;
   deadline: string;
   created_at: string;

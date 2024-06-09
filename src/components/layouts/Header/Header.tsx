@@ -1,58 +1,62 @@
+import { ActionIcon } from "@/components/atoms/ActionIcon";
+import { Icon } from "@/components/atoms/Icon";
+import { paths } from "@/routes/path";
+import { AppShell, Avatar, Burger, Flex, Group, NavLink } from "@mantine/core";
 import type { FC } from "react";
-import styled from "styled-components";
-import { IconButton } from "@/components/atoms/IconButton";
-import * as Avatar from "@radix-ui/react-avatar";
+import { Link } from "wouter";
 
 type Props = {
-  className?: string;
-  src?: string;
+  avatarImage?: string;
   alt?: string;
+  mobileOpened: boolean;
+  desktopOpened: boolean;
+  toggleDesktop: () => void;
+  toggleMobile: () => void;
 };
 
-const StyledAvatar = styled(Avatar.Image)`
-  width: 26px;
-  height: 26px;
-  object-fit: cover;
-  border-radius: 50%;
-`;
-
-export const Header: FC<Props> = ({ className, src, alt }) => {
+export const Header: FC<Props> = ({
+  avatarImage,
+  alt,
+  mobileOpened,
+  desktopOpened,
+  toggleDesktop,
+  toggleMobile,
+}) => {
   return (
-    <StyledHeader className={className}>
-      <IconButton icon="mdiMagnify" rounded />
-      <div>
-        <IconButton icon="mdiBellOutline" rounded />
-        <Avatar.Root>
-          <StyledAvatar className={className} alt={alt} src={src} />
-          <Avatar.Fallback>
-            <IconButton icon="mdiAccountOutline" rounded />
-          </Avatar.Fallback>
-        </Avatar.Root>
-      </div>
-    </StyledHeader>
+    <AppShell.Header>
+      <Flex h="100%" align="center" justify="space-between">
+        <Group h="100%" px="md" gap={0}>
+          <Burger
+            opened={mobileOpened}
+            onClick={toggleMobile}
+            hiddenFrom="sm"
+            size="sm"
+          />
+          <Burger
+            opened={desktopOpened}
+            onClick={toggleDesktop}
+            visibleFrom="sm"
+            size="sm"
+          />
+          <Link to={paths.home} style={{ textDecoration: "none" }}>
+            <NavLink
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+              href={paths.home}
+              label="Acme Inc"
+              leftSection={
+                <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="large" />
+              }
+            />
+          </Link>
+        </Group>
+        <Flex pr="sm" gap="sm" align="center">
+          <ActionIcon icon="mdiBellOutline" />
+          <Avatar src={avatarImage} alt={alt} size="sm" />
+        </Flex>
+      </Flex>
+    </AppShell.Header>
   );
 };
-
-const StyledHeader = styled.header`
-  height: 60px;
-  background-color: ${({ theme }) => theme.background.main};
-  border-bottom: ${({ theme }) => theme.border};
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  > button {
-    height: 32px;
-    margin-left: 16px;
-  }
-  > div {
-    display: flex;
-    margin-right: 8px;
-    align-items: center;
-    button,
-    img {
-      display: block;
-      margin: 0 8px;
-    }
-  }
-`;
