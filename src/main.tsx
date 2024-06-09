@@ -1,12 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import { GlobalStyle } from "./styles/global.ts";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import { Provider } from "react-redux";
-import { ThemeProvider } from "styled-components";
 import { store } from "@/store.ts";
-import { theme } from "@/styles/variables.ts";
-import { Theme as RadixTheme } from "@radix-ui/themes";
 import { MantineProvider } from "@mantine/core";
 
 async function enableMocking() {
@@ -24,12 +22,7 @@ enableMocking().then(() => {
     <React.StrictMode>
       <Provider store={store}>
         <MantineProvider>
-          <RadixTheme>
-            <ThemeProvider theme={theme}>
-              <GlobalStyle />
-              <App />
-            </ThemeProvider>
-          </RadixTheme>
+          <App />
         </MantineProvider>
       </Provider>
     </React.StrictMode>
