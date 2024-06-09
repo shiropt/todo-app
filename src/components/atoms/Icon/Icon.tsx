@@ -11,6 +11,7 @@ import {
   mdiMagnify,
   mdiAccountOutline,
   mdiPencilOutline,
+  mdiChevronDoubleRight,
 } from "@mdi/js";
 
 import { FC } from "react";
@@ -30,6 +31,7 @@ const icons = {
   mdiMagnify,
   mdiAccountOutline,
   mdiPencilOutline,
+  mdiChevronDoubleRight,
 };
 
 const sizes = {
