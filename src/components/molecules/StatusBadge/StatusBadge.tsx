@@ -1,23 +1,15 @@
 import { Todo, todoStatus } from "@/modules/todo/type";
-import { Badge as RadixBadge } from "@radix-ui/themes";
+import { Badge as MantineBadge } from "@mantine/core";
 import { FC } from "react";
-import styled from "styled-components";
 
 type Props = {
-  className?: string;
   status: Todo["status"];
 };
 
-export const Component: FC<Props> = ({ className, status }) => {
+export const StatusBadge: FC<Props> = ({ status }) => {
   return (
-    <RadixBadge className={className} color={todoStatus[status].color}>
+    <MantineBadge variant="light" color={todoStatus[status].color}>
       {todoStatus[status].label}
-    </RadixBadge>
+    </MantineBadge>
   );
 };
-
-export const StatusBadge = styled(Component)`
-  padding: 4px;
-  text-align: center;
-  display: inline-block;
-`;
