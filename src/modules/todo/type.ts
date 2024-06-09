@@ -4,6 +4,12 @@ export const todoStatus = {
   2: { label: "Stay", color: "blue" },
 } as const;
 
+export const STATUS = {
+  IN_PROGRESS: 0,
+  COMPLETE: 1,
+  STAY: 2,
+} as const;
+
 export type Status = (typeof todoStatus)[keyof typeof todoStatus]["label"];
 
 export type Todo = {
