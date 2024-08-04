@@ -1,15 +1,12 @@
-import { FC, useEffect } from "react";
 import { StatusBadge } from "@/components/molecules/StatusBadge";
-import { Todo, STATUS } from "@/modules/todo/type";
-import { useForm } from "@mantine/form";
+import { usePostTodoMutation, useUpdateTodoMutation } from "@/modules/todo/api";
+import { STATUS, Todo } from "@/modules/todo/type";
 import { DateInput, DatesProvider } from "@mantine/dates";
-import dayjs from "dayjs";
+import { useForm } from "@mantine/form";
+import { FC, useEffect } from "react";
 
-type Props = {
-  className?: string;
-  todo: Todo;
-  onClose: () => void;
-};
+import { ActionIcon } from "@/components/atoms/ActionIcon";
+import { formatDateToYMD } from "@/utils/date";
 import {
   Button,
   Container,
@@ -21,45 +18,71 @@ import {
   TextInput,
   Textarea,
 } from "@mantine/core";
-import { ActionIcon } from "@/components/atoms/ActionIcon";
-import { formatDateToYMD } from "@/utils/date";
-type Values = Omit<Todo, "id">;
+import dayjs from "dayjs";
+
+type Props = {
+  className?: string;
+  todo: Todo;
+  onClose: () => void;
+};
 
 export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
-  const { title, status, created_at, updated_at, deadline, description } = todo;
-  const { values, onSubmit, setFieldValue, setValues, getInputProps } =
-    useForm<Values>({
-      initialValues: {
-        title,
-        status,
-        created_at,
-        updated_at,
-        deadline,
-        description,
-      },
-    });
-
-  useEffect(() => {
-    setValues({
+  const { id, title, status, created_at, updated_at, deadline, description } =
+    todo;
+  const [post] = usePostTodoMutation();
+  const [update] = useUpdateTodoMutation();
+  const {
+    values,
+    onSubmit,
+    setFieldValue,
+    setValues,
+    getInputProps,
+    isDirty,
+    setInitialValues,
+    reset,
+  } = useForm<Todo>({
+    initialValues: {
+      id,
       title,
       status,
+      created_at,
+      updated_at,
       deadline,
       description,
-    });
-  }, [setValues, title, status, deadline, description]);
+    },
+  });
+
+  useEffect(() => {
+    setValues(todo);
+    setInitialValues(todo);
+  }, [todo, setValues, setInitialValues]);
+
+  const handleSubmit = async (values: Todo) => {
+    if (values.id) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { created_at, updated_at, ...rest } = values;
+      await update(rest);
+      setInitialValues(values);
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, created_at, updated_at, ...rest } = values;
+      await post(rest);
+      reset();
+    }
+  };
 
   return (
     <Container miw="400px" p="8" className={className}>
       <ActionIcon
         onClick={onClose}
-        mb="4"
         icon="mdiChevronDoubleRight"
         variant="white"
       />
-      <form onSubmit={onSubmit((values) => console.log(values))}>
+      <form onSubmit={onSubmit(handleSubmit)}>
         <TextInput
           {...getInputProps("title")}
           py="md"
+          required
           bd={0}
           name="title"
           value={values.title}
@@ -71,10 +94,12 @@ export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
               <Table.Td>Created Date</Table.Td>
               <Table.Td>{formatDateToYMD(values.created_at)}</Table.Td>
             </Table.Tr>
-            <Table.Tr>
-              <Table.Td>Updated Date</Table.Td>
-              <Table.Td>{formatDateToYMD(values.updated_at)}</Table.Td>
-            </Table.Tr>
+            {updated_at && (
+              <Table.Tr>
+                <Table.Td>Updated Date</Table.Td>
+                <Table.Td>{formatDateToYMD(values.updated_at)}</Table.Td>
+              </Table.Tr>
+            )}
             <Table.Tr>
               <Table.Td>Due Date</Table.Td>
               <Table.Td>
@@ -84,7 +109,9 @@ export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
                       root: "max-w-[294px] bg-white rounded min-w-[120px]",
                     }}
                     valueFormat="YYYY/MM/DD"
-                    value={new Date(values.deadline)}
+                    value={
+                      values.deadline ? new Date(values.deadline) : undefined
+                    }
                     onChange={(date) => {
                       setFieldValue(
                         "deadline",
@@ -152,7 +179,7 @@ export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
           </Table.Tbody>
         </Table>
         <Flex justify="end" p="8">
-          <Button type="submit" color="black">
+          <Button disabled={!isDirty()} type="submit" color="black">
             Save
           </Button>
         </Flex>

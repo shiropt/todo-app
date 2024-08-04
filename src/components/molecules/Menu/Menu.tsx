@@ -15,6 +15,7 @@ export const Menu: FC<Props> = ({ icon, title, to }) => {
       to={to}
     >
       <NavLink
+        component="button"
         active={location === to}
         w="100%"
         leftSection={<Icon icon={icon} />}

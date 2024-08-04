@@ -44,10 +44,10 @@ export const Header: FC<Props> = ({
                 textDecoration: "none",
                 color: "black",
               }}
-              href={paths.home}
+              component="button"
               label="Acme Inc"
               leftSection={
-                <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="large" />
+                <Icon icon="mdiCheckboxMarkedCircleAutoOutline" size="lg" />
               }
             />
           </Link>
