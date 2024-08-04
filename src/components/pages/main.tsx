@@ -21,7 +21,6 @@ export const Main: FC = () => {
           <Route path={paths.stats}>
             <div>stats</div>
           </Route>
-          <div>404 not found</div>
         </AppShell.Main>
       </Switch>
     </Route>
