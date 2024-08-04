@@ -6,7 +6,7 @@ export const handlers = [
   http.get<Record<string, string>, Record<string, string>, TodosResponse>(
     "/todos",
     () => {
-      const todos = db.todo.getAll();
+      const todos = db.todo.getAll().reverse();
 
       return HttpResponse.json({
         type: "todo",
