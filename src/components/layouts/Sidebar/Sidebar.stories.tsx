@@ -7,7 +7,6 @@ const meta = {
   title: "layouts/Sidebar",
   component: Sidebar,
   parameters: {},
-  tags: ["autodocs"],
   argTypes: {},
   args: {},
   render: () => {

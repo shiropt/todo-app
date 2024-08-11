@@ -5,7 +5,6 @@ const meta = {
   title: "atoms/ActionIcon",
   component: ActionIcon,
   parameters: {},
-  tags: ["autodocs"],
   argTypes: {},
   args: {},
 } satisfies Meta<typeof ActionIcon>;
