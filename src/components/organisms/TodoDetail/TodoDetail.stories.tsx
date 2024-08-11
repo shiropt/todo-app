@@ -5,7 +5,6 @@ const meta = {
   title: "organisms/TodoDetail",
   component: TodoDetail,
   parameters: {},
-  tags: ["autodocs"],
   argTypes: {},
   args: {},
 } satisfies Meta<typeof TodoDetail>;

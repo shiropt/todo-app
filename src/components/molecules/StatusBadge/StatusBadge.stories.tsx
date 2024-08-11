@@ -6,7 +6,6 @@ const meta = {
   title: "molecules/StatusBadge",
   component: StatusBadge,
   parameters: {},
-  tags: ["autodocs"],
   argTypes: {},
   args: {},
 } satisfies Meta<typeof StatusBadge>;

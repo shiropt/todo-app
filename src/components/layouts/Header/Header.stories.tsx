@@ -14,7 +14,6 @@ const meta = {
   title: "layouts/Header",
   component: Header,
   parameters: {},
-  tags: ["autodocs"],
   argTypes: {},
   args: {},
   render: () => {
