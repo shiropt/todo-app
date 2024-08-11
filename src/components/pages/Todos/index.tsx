@@ -5,14 +5,7 @@ import { useDispatch, useSelector } from "@/libs/redux";
 import { useDeleteTodoMutation, useGetTodoListQuery } from "@/modules/todo/api";
 import { STATUS, Todo } from "@/modules/todo/type";
 import { uiActions } from "@/modules/ui/slice";
-import {
-  AppShell,
-  Box,
-  Loader,
-  LoadingOverlay,
-  Table,
-  Text,
-} from "@mantine/core";
+import { AppShell, Box, Loader, LoadingOverlay, Table, Text } from "@mantine/core";
 import { useCallback, useMemo, useState } from "react";
 
 export const Todos = () => {
@@ -55,13 +48,7 @@ export const Todos = () => {
   );
 
   const { data, error, isLoading } = useGetTodoListQuery("");
-  if (isLoading)
-    return (
-      <LoadingOverlay
-        visible={isLoading}
-        loaderProps={{ children: <Loader /> }}
-      />
-    );
+  if (isLoading) return <LoadingOverlay visible={isLoading} loaderProps={{ children: <Loader /> }} />;
 
   if (error) return <div>Error:</div>;
 

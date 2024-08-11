@@ -5,6 +5,9 @@ import "@mantine/dates/styles.css";
 import type { Preview } from "@storybook/react";
 import React from "react";
 import { store } from "../src/store";
+import { initialize, mswLoader } from "msw-storybook-addon";
+
+initialize();
 
 export const theme: MantineThemeOverride = {};
 
@@ -17,6 +20,7 @@ const preview: Preview = {
       },
     },
   },
+  loaders: [mswLoader],
 };
 
 export const decorators = [
