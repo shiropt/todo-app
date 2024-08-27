@@ -17,6 +17,10 @@ jobs:
           install-yarn: true
           node-version: "20.15.1"
       - run: node -v
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - node_modules
 
   test:
     executor: default
