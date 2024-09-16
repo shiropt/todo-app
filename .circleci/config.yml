@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@6.1.0
   slack: circleci/slack@4.13.3
+  browser-tools: circleci/browser-tools@1.4.8
 
 executors:
   default:
@@ -66,6 +66,17 @@ jobs:
           template: basic_fail_1
           mentions: "@shiro_pon"
 
+  storybook_screenshots:
+    executor: default
+    steps:
+      - browser-tools/install-chrome
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn build-storybook
+      - run: yarn storycap
+      - run: yarn reg-suit
+
 workflows:
   version: 2
   ci:
@@ -81,6 +92,9 @@ workflows:
           requires:
             - setup
       - build:
+          requires:
+            - setup
+      - storybook_screenshots:
           requires:
             - setup
       - slack-notify:
