@@ -1,11 +1,106 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@5.2
+  slack: circleci/slack@4.13.3
+  browser-tools: circleci/browser-tools@1.4.8
+
+executors:
+  default:
+    docker:
+      - image: cimg/node:lts
+    working_directory: /home/circleci/todo-app
+
+jobs:
+  setup:
+    executor: default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - persist_to_workspace:
+          root: /home/circleci/todo-app
+          paths:
+            - node_modules
+
+  type-check:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn typecheck
+
+  lint:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint
+  vitest:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn vitest
+
+  build:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn build
+
+  slack-notify:
+    executor: default
+    steps:
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+          mentions: "@shiro_pon"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          mentions: "@shiro_pon"
+
+  storybook_screenshots:
+    executor: default
+    steps:
+      - browser-tools/install-chrome
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn build-storybook
+      - run: yarn storycap
+      - run: yarn reg-suit
 
 workflows:
-  sample:
+  version: 2
+  ci:
     jobs:
-      - node/test:
-          version: "20.11.1"
-          pkg-manager: yarn
+      - setup
+      - type-check:
+          requires:
+            - setup
+      - lint:
+          requires:
+            - setup
+      - vitest:
+          requires:
+            - setup
+      - build:
+          requires:
+            - setup
+      - storybook_screenshots:
+          requires:
+            - setup
+      - slack-notify:
+          requires:
+            - type-check
+            - lint
+            - vitest
+            - build
+          context: SLACK_ACCESS_TOKEN
