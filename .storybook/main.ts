@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-themes",
     "@storybook/addon-styling-webpack", // Add this line only if you are not using Vite
+    "storycap",
   ],
   framework: {
     name: "@storybook/react-vite",

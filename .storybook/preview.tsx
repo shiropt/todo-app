@@ -6,6 +6,7 @@ import type { Preview } from "@storybook/react";
 import React from "react";
 import { store } from "../src/store";
 import { initialize, mswLoader } from "msw-storybook-addon";
+import { withScreenshot } from "storycap";
 
 initialize();
 
@@ -31,6 +32,7 @@ export const decorators = [
       </MantineProvider>
     </ReduxProvider>
   ),
+  withScreenshot,
 ];
 
 export default preview;

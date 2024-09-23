@@ -25,6 +25,7 @@ dist-ssr
 .env
 
 *storybook.log
+*storybook.log.reg
 /test-results/
 /playwright-report/
 /blob-report/
