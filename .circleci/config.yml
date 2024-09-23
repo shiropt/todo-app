@@ -45,6 +45,14 @@ jobs:
       - attach_workspace:
           at: .
       - run: yarn vitest
+  e2e:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn start
+      - run: yarn e2e
 
   build:
     executor: default
@@ -89,6 +97,9 @@ workflows:
           requires:
             - setup
       - vitest:
+          requires:
+            - setup
+      - e2e:
           requires:
             - setup
       - build:
