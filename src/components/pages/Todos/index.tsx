@@ -65,6 +65,7 @@ export const Todos = () => {
             <Table.Tr>
               <Table.Th px="xs" py={4}>
                 <ActionIcon
+                  aria-label="Add new todo"
                   variant="white"
                   style={{
                     cursor: "pointer",
