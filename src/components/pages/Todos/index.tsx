@@ -2,15 +2,26 @@ import { ActionIcon } from "@/components/atoms/ActionIcon";
 import { StatusBadge } from "@/components/molecules/StatusBadge";
 import { TodoDetail } from "@/components/organisms/TodoDetail";
 import { useDispatch, useSelector } from "@/libs/redux";
-import { useDeleteTodoMutation } from "@/modules/todo/api";
 import { STATUS, Todo, TodosResponse } from "@/modules/todo/type";
 import { uiActions } from "@/modules/ui/slice";
 import { AppShell, Box, Skeleton, Table, Text } from "@mantine/core";
-import { Suspense, use, useCallback, useMemo, useState } from "react";
+import { memo, Suspense, use, useCallback, useMemo, useState } from "react";
 
 const fetchTodoList = async () => {
   const response = await fetch(import.meta.env.VITE_API_ENDPOINT + "/todos");
   if (!response.ok) throw new Error("Failed to fetch todos");
+  const json = await response.json();
+  return json;
+};
+
+const deleteTodo = async (id: string) => {
+  const response = await fetch(
+    import.meta.env.VITE_API_ENDPOINT + `/todo/${id}`,
+    {
+      method: "DELETE",
+    }
+  );
+  if (!response.ok) throw new Error("Failed to delete todo");
   const json = await response.json();
   return json;
 };
@@ -29,7 +40,6 @@ export const Todos = () => {
   }, []);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>();
   const isAsideOpen = useSelector((state) => state.ui.isAsideOpen);
-  const [remove] = useDeleteTodoMutation();
 
   const dispatch = useDispatch();
 
@@ -46,14 +56,7 @@ export const Todos = () => {
     setSelectedTodo(newTodo);
     if (!isAsideOpen) dispatch(uiActions.toggleAside());
   }, [dispatch, isAsideOpen, newTodo]);
-
-  const handleRemove = useCallback(
-    (id: string) => async () => {
-      await remove(id);
-    },
-    [remove]
-  );
-
+  const promise = useMemo(() => fetchTodoList(), []);
   return (
     <Box>
       <Box>
@@ -95,8 +98,7 @@ export const Todos = () => {
           >
             <TableBody
               selectedTodo={selectedTodo}
-              promise={fetchTodoList()}
-              handleRemove={handleRemove}
+              promise={promise}
               handleRowClick={handleRowClick}
             />
           </Suspense>
@@ -115,45 +117,55 @@ export const Todos = () => {
   );
 };
 
-const TableBody = ({
-  promise,
-  handleRowClick,
-  selectedTodo,
-  handleRemove,
-}: {
-  promise: PromiseLike<TodosResponse>;
-  handleRowClick: (todo: Todo) => void;
-  selectedTodo?: Todo | null;
-  handleRemove: (id: string) => () => void;
-}) => {
-  const list = use(promise);
-  {
-    return (
-      <Table.Tbody pt="xs">
-        {list.data.map((todo) => {
-          return (
-            <Table.Tr
-              bd={todo.id === selectedTodo?.id ? "1px solid blue" : "none"}
-              key={todo.id}
-              style={{ cursor: "pointer", boxSizing: "border-box" }}
-            >
-              <Table.Td onClick={() => handleRowClick(todo)}>
-                <Text>{todo.title}</Text>
-              </Table.Td>
-              <Table.Td px={0} align="right">
-                <StatusBadge status={todo.status}></StatusBadge>
-                <ActionIcon
-                  style={{ verticalAlign: "middle" }}
-                  onClick={handleRemove(todo.id)}
-                  icon="mdiTrashCanOutline"
-                  variant="white"
-                  mx="sm"
-                />
-              </Table.Td>
-            </Table.Tr>
-          );
-        })}
-      </Table.Tbody>
-    );
+const TableBody = memo(
+  ({
+    promise,
+    handleRowClick,
+    selectedTodo,
+  }: {
+    promise: PromiseLike<TodosResponse>;
+    handleRowClick: (todo: Todo) => void;
+    selectedTodo?: Todo | null;
+  }) => {
+    const [list, setList] = useState(use(promise));
+
+    const handleRemove = async (id: string) => {
+      const response = await deleteTodo(id);
+      const removedId = response.data.id;
+      setList((prev) => ({
+        ...prev,
+        data: prev.data.filter((todo) => todo.id !== removedId),
+      }));
+    };
+
+    {
+      return (
+        <Table.Tbody pt="xs">
+          {list.data.map((todo) => {
+            return (
+              <Table.Tr
+                bd={todo.id === selectedTodo?.id ? "1px solid blue" : "none"}
+                key={todo.id}
+                style={{ cursor: "pointer", boxSizing: "border-box" }}
+              >
+                <Table.Td onClick={() => handleRowClick(todo)}>
+                  <Text>{todo.title}</Text>
+                </Table.Td>
+                <Table.Td px={0} align="right">
+                  <StatusBadge status={todo.status}></StatusBadge>
+                  <ActionIcon
+                    style={{ verticalAlign: "middle" }}
+                    onClick={() => handleRemove(todo.id)}
+                    icon="mdiTrashCanOutline"
+                    variant="white"
+                    mx="sm"
+                  />
+                </Table.Td>
+              </Table.Tr>
+            );
+          })}
+        </Table.Tbody>
+      );
+    }
   }
-};
+);
