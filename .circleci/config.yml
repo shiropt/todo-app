@@ -45,6 +45,14 @@ jobs:
       - attach_workspace:
           at: .
       - run: yarn vitest
+  e2e:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn start
+      - run: yarn e2e
 
   build:
     executor: default
@@ -91,6 +99,10 @@ workflows:
       - vitest:
           requires:
             - setup
+      # TODO: ci 環境で msw の起動できるようにする
+      # - e2e:
+      #     requires:
+      #       - setup
       - build:
           requires:
             - setup

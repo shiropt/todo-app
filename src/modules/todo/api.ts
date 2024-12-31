@@ -15,7 +15,7 @@ export const todoApi = createApi({
     }),
     postTodo: build.mutation<Todo, Partial<Todo>>({
       query: (body) => ({
-        url: `todos`,
+        url: `todo`,
         method: "POST",
         body,
       }),
@@ -23,7 +23,7 @@ export const todoApi = createApi({
     }),
     updateTodo: build.mutation<Todo, Partial<Todo>>({
       query: (body) => ({
-        url: `todos/${body.id}`,
+        url: `todo/${body.id}`,
         method: "PUT",
         body: { ...body, id: undefined },
       }),
@@ -31,7 +31,7 @@ export const todoApi = createApi({
     }),
     deleteTodo: build.mutation<Todo, string>({
       query: (id) => ({
-        url: `todos/${id}`,
+        url: `todo/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Todo"],
