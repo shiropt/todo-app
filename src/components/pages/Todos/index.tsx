@@ -2,29 +2,20 @@ import { ActionIcon } from "@/components/atoms/ActionIcon";
 import { StatusBadge } from "@/components/molecules/StatusBadge";
 import { TodoDetail } from "@/components/organisms/TodoDetail";
 import { useDispatch, useSelector } from "@/libs/redux";
+import { deleteTodo, fetchTodoList } from "@/modules/todo/actions";
+import { todoActions } from "@/modules/todo/slice";
 import { STATUS, Todo, TodosResponse } from "@/modules/todo/type";
 import { uiActions } from "@/modules/ui/slice";
 import { AppShell, Box, Skeleton, Table, Text } from "@mantine/core";
-import { memo, Suspense, use, useCallback, useMemo, useState } from "react";
-
-const fetchTodoList = async () => {
-  const response = await fetch(import.meta.env.VITE_API_ENDPOINT + "/todos");
-  if (!response.ok) throw new Error("Failed to fetch todos");
-  const json = await response.json();
-  return json;
-};
-
-const deleteTodo = async (id: string) => {
-  const response = await fetch(
-    import.meta.env.VITE_API_ENDPOINT + `/todo/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
-  if (!response.ok) throw new Error("Failed to delete todo");
-  const json = await response.json();
-  return json;
-};
+import {
+  memo,
+  Suspense,
+  use,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 export const Todos = () => {
   const newTodo: Todo = useMemo(() => {
@@ -136,12 +127,7 @@ const TableBody = memo(
     }
     const todoList = useSelector((state) => state.todo.todoList);
     const handleRemove = async (id: string) => {
-      const response = await deleteTodo(id);
-      const removedId = response.data.id;
-      setList((prev) => ({
-        ...prev,
-        data: prev.data.filter((todo) => todo.id !== removedId),
-      }));
+      await deleteTodo(id, dispatch);
     };
 
     {
