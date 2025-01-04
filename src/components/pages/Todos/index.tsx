@@ -127,8 +127,14 @@ const TableBody = memo(
     handleRowClick: (todo: Todo) => void;
     selectedTodo?: Todo | null;
   }) => {
-    const [list, setList] = useState(use(promise));
+    const dispatch = useDispatch();
+    const isFirstRender = useRef(false);
 
+    if (!isFirstRender.current) {
+      dispatch(todoActions.setTodoList(use(promise).data));
+      isFirstRender.current = true;
+    }
+    const todoList = useSelector((state) => state.todo.todoList);
     const handleRemove = async (id: string) => {
       const response = await deleteTodo(id);
       const removedId = response.data.id;
@@ -141,7 +147,7 @@ const TableBody = memo(
     {
       return (
         <Table.Tbody pt="xs">
-          {list.data.map((todo) => {
+          {todoList.map((todo) => {
             return (
               <Table.Tr
                 bd={todo.id === selectedTodo?.id ? "1px solid blue" : "none"}
