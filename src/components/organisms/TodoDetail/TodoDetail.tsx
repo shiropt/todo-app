@@ -1,5 +1,4 @@
 import { StatusBadge } from "@/components/molecules/StatusBadge";
-import { usePostTodoMutation, useUpdateTodoMutation } from "@/modules/todo/api";
 import { STATUS, Todo } from "@/modules/todo/type";
 import { DateInput, DatesProvider } from "@mantine/dates";
 import { useForm } from "@mantine/form";
@@ -19,6 +18,8 @@ import {
   Textarea,
 } from "@mantine/core";
 import dayjs from "dayjs";
+import { useDispatch } from "@/libs/redux";
+import { postTodo, updateTodo } from "@/modules/todo/actions";
 
 type Props = {
   className?: string;
@@ -29,8 +30,6 @@ type Props = {
 export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
   const { id, title, status, created_at, updated_at, deadline, description } =
     todo;
-  const [post] = usePostTodoMutation();
-  const [update] = useUpdateTodoMutation();
   const {
     values,
     onSubmit,
@@ -52,6 +51,8 @@ export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
     },
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setValues(todo);
     setInitialValues(todo);
@@ -59,14 +60,10 @@ export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
 
   const handleSubmit = async (values: Todo) => {
     if (values.id) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { created_at, updated_at, ...rest } = values;
-      await update(rest);
+      await updateTodo(values, dispatch);
       setInitialValues(values);
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, created_at, updated_at, ...rest } = values;
-      await post(rest);
+      await postTodo(values, dispatch);
       reset();
     }
   };

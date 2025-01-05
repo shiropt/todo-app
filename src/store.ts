@@ -1,16 +1,13 @@
-import { todoApi } from "@/modules/todo/api";
 import { uiReducer } from "@/modules/ui/slice";
+import { todoReducer } from "@/modules/todo/slice";
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
-    [todoApi.reducerPath]: todoApi.reducer,
+    todo: todoReducer,
     ui: uiReducer,
   },
-
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(todoApi.middleware),
 });
 
 setupListeners(store.dispatch);
