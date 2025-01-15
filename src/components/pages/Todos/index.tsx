@@ -137,7 +137,7 @@ const TableBody = memo(
           {todoList.map((todo) => {
             return (
               <Table.Tr
-                bd={todo.id === selectedTodo?.id ? "1px solid blue" : "none"}
+                bg={todo.id === selectedTodo?.id ? "blue.0" : "none"}
                 key={todo.id}
                 style={{ cursor: "pointer", boxSizing: "border-box" }}
               >
