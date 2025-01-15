@@ -19,7 +19,7 @@ import {
 } from "@mantine/core";
 import dayjs from "dayjs";
 import { useDispatch } from "@/libs/redux";
-import { postTodo, updateTodo } from "@/modules/todo/actions";
+import { postTodo, updateTodo } from "@/libs/supabase/actions";
 
 type Props = {
   className?: string;

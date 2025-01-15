@@ -2,9 +2,9 @@ import { ActionIcon } from "@/components/atoms/ActionIcon";
 import { StatusBadge } from "@/components/molecules/StatusBadge";
 import { TodoDetail } from "@/components/organisms/TodoDetail";
 import { useDispatch, useSelector } from "@/libs/redux";
-import { deleteTodo, fetchTodoList } from "@/modules/todo/actions";
+import { deleteTodo, fetchTodos } from "@/libs/supabase/actions";
 import { todoActions } from "@/modules/todo/slice";
-import { STATUS, Todo, TodosResponse } from "@/modules/todo/type";
+import { STATUS, Todo } from "@/modules/todo/type";
 import { uiActions } from "@/modules/ui/slice";
 import { AppShell, Box, Skeleton, Table, Text } from "@mantine/core";
 import {
@@ -47,7 +47,8 @@ export const Todos = () => {
     setSelectedTodo(newTodo);
     if (!isAsideOpen) dispatch(uiActions.toggleAside());
   }, [dispatch, isAsideOpen, newTodo]);
-  const promise = useMemo(() => fetchTodoList(), []);
+
+  const promise = useMemo(() => fetchTodos(), []);
   return (
     <Box>
       <Box>
@@ -114,7 +115,7 @@ const TableBody = memo(
     handleRowClick,
     selectedTodo,
   }: {
-    promise: PromiseLike<TodosResponse>;
+    promise: PromiseLike<Todo[]>;
     handleRowClick: (todo: Todo) => void;
     selectedTodo?: Todo | null;
   }) => {
@@ -122,7 +123,7 @@ const TableBody = memo(
     const isFirstRender = useRef(false);
 
     if (!isFirstRender.current) {
-      dispatch(todoActions.setTodoList(use(promise).data));
+      dispatch(todoActions.setTodoList(use(promise)));
       isFirstRender.current = true;
     }
     const todoList = useSelector((state) => state.todo.todoList);
