@@ -137,11 +137,12 @@ const TableBody = memo(
           {todoList.map((todo) => {
             return (
               <Table.Tr
+                onClick={() => handleRowClick(todo)}
                 bg={todo.id === selectedTodo?.id ? "blue.0" : "none"}
                 key={todo.id}
                 style={{ cursor: "pointer", boxSizing: "border-box" }}
               >
-                <Table.Td onClick={() => handleRowClick(todo)}>
+                <Table.Td>
                   <Text>{todo.title}</Text>
                 </Table.Td>
                 <Table.Td px={0} align="right">
