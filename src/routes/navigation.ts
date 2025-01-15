@@ -8,11 +8,11 @@ export const menus = [
     to: `${paths.calendar}`,
     icon: "mdiCalendarTextOutline",
   },
-  {
-    title: "Stats",
-    to: `${paths.stats}`,
-    icon: "mdiChartBellCurveCumulative",
-  },
+  // {
+  //   title: "Stats",
+  //   to: `${paths.stats}`,
+  //   icon: "mdiChartBellCurveCumulative",
+  // },
 ] as const;
 
 export type Menus = typeof menus;

@@ -1,7 +1,6 @@
-import { ActionIcon } from "@/components/atoms/ActionIcon";
 import { Icon } from "@/components/atoms/Icon";
 import { paths } from "@/routes/path";
-import { AppShell, Avatar, Burger, Flex, Group, NavLink } from "@mantine/core";
+import { AppShell, Burger, Flex, Group, NavLink } from "@mantine/core";
 import type { FC } from "react";
 import { Link } from "wouter";
 
@@ -15,8 +14,6 @@ type Props = {
 };
 
 export const Header: FC<Props> = ({
-  avatarImage,
-  alt,
   mobileOpened,
   desktopOpened,
   toggleDesktop,
