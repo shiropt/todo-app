@@ -22,7 +22,7 @@ export const Dashboard: FC = () => {
       }}
       aside={{
         width: 400,
-        breakpoint: "sm",
+        breakpoint: "xs",
         collapsed: { mobile: !isAsideOpen, desktop: !isAsideOpen },
       }}
     >
