@@ -53,8 +53,8 @@ export const Header: FC<Props> = ({
           </Link>
         </Group>
         <Flex pr="sm" gap="sm" align="center">
-          <ActionIcon icon="mdiBellOutline" />
-          <Avatar src={avatarImage} alt={alt} size="sm" />
+          {/* <ActionIcon icon="mdiBellOutline" />
+          <Avatar src={avatarImage} alt={alt} size="sm" /> */}
         </Flex>
       </Flex>
     </AppShell.Header>
