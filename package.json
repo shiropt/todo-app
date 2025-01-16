@@ -28,6 +28,7 @@
     "@mdi/react": "^1.6.1",
     "@reduxjs/toolkit": "^2.2.3",
     "@supabase/supabase-js": "^2.47.10",
+    "@tabler/icons-react": "^3.28.1",
     "dayjs": "^1.11.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
