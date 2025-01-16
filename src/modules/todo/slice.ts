@@ -5,6 +5,7 @@ export const { actions: todoActions, reducer: todoReducer } = createSlice({
   name: "todoList",
   initialState: {
     todoList: [] as Todo[],
+    selectedTodo: null as Todo | null,
   },
   reducers: {
     setTodoList(state, action: PayloadAction<Todo[]>) {
@@ -23,6 +24,9 @@ export const { actions: todoActions, reducer: todoReducer } = createSlice({
       state.todoList = state.todoList.filter(
         (todo) => todo.id !== action.payload
       );
+    },
+    setSelectedTodo(state, action: PayloadAction<Todo | null>) {
+      state.selectedTodo = action.payload;
     },
   },
 });
