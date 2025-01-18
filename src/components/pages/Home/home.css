@@ -1,0 +1,27 @@
+li {
+  cursor: pointer;
+}
+li:hover {
+  background-color: rgb(248, 249, 250);
+}
+
+.card-wrapper {
+  container-type: inline-size;
+}
+.card-wrapper > div {
+  width: 450px;
+
+  @container (max-width: 920px) {
+    width: 400px;
+  }
+  @container (max-width: 820px) {
+    width: 300px;
+  }
+  @container (max-width: 620px) {
+    width: 240px;
+  }
+
+  @container (max-width: 500px) {
+    width: 100%;
+  }
+}
