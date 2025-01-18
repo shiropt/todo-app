@@ -6,6 +6,8 @@ import "@mantine/dates/styles.css";
 import { Provider } from "react-redux";
 import { store } from "@/store.ts";
 import { MantineProvider } from "@mantine/core";
+import { ErrorBoundary } from "react-error-boundary";
+import { Fallback } from "@/error.tsx";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -22,7 +24,9 @@ enableMocking().then(() => {
     <React.StrictMode>
       <Provider store={store}>
         <MantineProvider>
-          <App />
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <App />
+          </ErrorBoundary>
         </MantineProvider>
       </Provider>
     </React.StrictMode>

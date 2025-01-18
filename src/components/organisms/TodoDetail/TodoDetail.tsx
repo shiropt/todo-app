@@ -20,6 +20,7 @@ import {
 import dayjs from "dayjs";
 import { useDispatch } from "@/libs/redux";
 import { postTodo, updateTodo } from "@/libs/supabase/actions";
+import "./todo-detail.css";
 
 type Props = {
   className?: string;
@@ -27,7 +28,11 @@ type Props = {
   onClose: () => void;
 };
 
-export const TodoDetail: FC<Props> = ({ className, todo, onClose }) => {
+export const TodoDetail: FC<Props> = ({
+  className = "todo-detail",
+  todo,
+  onClose,
+}) => {
   const { id, title, status, created_at, updated_at, deadline, description } =
     todo;
   const {

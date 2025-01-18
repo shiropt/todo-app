@@ -17,8 +17,6 @@ export const ActionIcon: FC<Props> = ({
   variant = "outline",
   radius = "lg",
   size = "md",
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ref,
   ...props
 }) => {
   return (

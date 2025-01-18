@@ -1,21 +1,12 @@
 import { ActionIcon } from "@/components/atoms/ActionIcon";
 import { StatusBadge } from "@/components/molecules/StatusBadge";
-import { TodoDetail } from "@/components/organisms/TodoDetail";
 import { useDispatch, useSelector } from "@/libs/redux";
 import { deleteTodo, fetchTodos } from "@/libs/supabase/actions";
 import { todoActions } from "@/modules/todo/slice";
 import { STATUS, Todo } from "@/modules/todo/type";
 import { uiActions } from "@/modules/ui/slice";
-import { AppShell, Box, Skeleton, Table, Text } from "@mantine/core";
-import {
-  memo,
-  Suspense,
-  use,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Box, Skeleton, Table, Text } from "@mantine/core";
+import { memo, Suspense, use, useCallback, useMemo, useRef } from "react";
 
 export const Todos = () => {
   const newTodo: Todo = useMemo(() => {
@@ -29,22 +20,22 @@ export const Todos = () => {
       description: "",
     };
   }, []);
-  const [selectedTodo, setSelectedTodo] = useState<Todo | null>();
   const isAsideOpen = useSelector((state) => state.ui.isAsideOpen);
+  const { todoList, selectedTodo } = useSelector((state) => state.todo);
 
   const dispatch = useDispatch();
 
   const handleRowClick = useCallback(
     (todo: Todo) => {
-      setSelectedTodo({ ...todo });
+      dispatch(todoActions.setSelectedTodo(todo));
       if (isAsideOpen) return;
       dispatch(uiActions.toggleAside());
     },
-    [isAsideOpen, dispatch, setSelectedTodo]
+    [isAsideOpen, dispatch]
   );
 
   const handleAddButtonClick = useCallback(() => {
-    setSelectedTodo(newTodo);
+    dispatch(todoActions.setSelectedTodo(newTodo));
     if (!isAsideOpen) dispatch(uiActions.toggleAside());
   }, [dispatch, isAsideOpen, newTodo]);
 
@@ -89,6 +80,7 @@ export const Todos = () => {
             }
           >
             <TableBody
+              todoList={todoList}
               selectedTodo={selectedTodo}
               promise={promise}
               handleRowClick={handleRowClick}
@@ -96,15 +88,6 @@ export const Todos = () => {
           </Suspense>
         </Table>
       </Box>
-      <AppShell.Aside>
-        <TodoDetail
-          onClose={() => {
-            dispatch(uiActions.toggleAside());
-            setSelectedTodo(null);
-          }}
-          todo={selectedTodo || newTodo}
-        />
-      </AppShell.Aside>
     </Box>
   );
 };
@@ -114,10 +97,12 @@ const TableBody = memo(
     promise,
     handleRowClick,
     selectedTodo,
+    todoList,
   }: {
     promise: PromiseLike<Todo[]>;
     handleRowClick: (todo: Todo) => void;
     selectedTodo?: Todo | null;
+    todoList: Todo[];
   }) => {
     const dispatch = useDispatch();
     const isFirstRender = useRef(false);
@@ -126,7 +111,6 @@ const TableBody = memo(
       dispatch(todoActions.setTodoList(use(promise)));
       isFirstRender.current = true;
     }
-    const todoList = useSelector((state) => state.todo.todoList);
     const handleRemove = async (id: string) => {
       await deleteTodo(id, dispatch);
     };
@@ -137,11 +121,12 @@ const TableBody = memo(
           {todoList.map((todo) => {
             return (
               <Table.Tr
-                bd={todo.id === selectedTodo?.id ? "1px solid blue" : "none"}
+                onClick={() => handleRowClick(todo)}
+                bg={todo.id === selectedTodo?.id ? "blue.0" : "none"}
                 key={todo.id}
                 style={{ cursor: "pointer", boxSizing: "border-box" }}
               >
-                <Table.Td onClick={() => handleRowClick(todo)}>
+                <Table.Td>
                   <Text>{todo.title}</Text>
                 </Table.Td>
                 <Table.Td px={0} align="right">
