@@ -86,7 +86,6 @@ jobs:
       - run: yarn reg-suit
 
 workflows:
-  version: 2
   ci:
     jobs:
       - setup
