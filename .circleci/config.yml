@@ -46,22 +46,7 @@ jobs:
           at: .
       - run: yarn lint --format junit -o reports/lint.xml
       - store_test_results:
-         path: reports
-  test_list:
-    executor: default
-    steps:
-      - checkout
-      - run:
-          name: 2並列でテストを実行 1/2
-          command: |
-            circleci tests glob "/src/__tests__/**/*.spec.ts" | \
-            circleci tests split --total=2 --index=0
-      - run:
-          name: 2並列でテストを実行 2/2
-          command: |
-            circleci tests glob "/src/__tests__/**/*.spec.ts" | \
-            circleci tests split --total=2 --index=1
-
+          path: reports
   vitest:
     parallelism: 2
     executor: default
@@ -71,18 +56,16 @@ jobs:
       - run:
           name: Run vitest
           command: |
-            echo  $(circleci tests glob "/src/__tests__/**/*.spec.ts")
-            yarn vitest  \
-            ./src/__tests__/utils/date.spec.ts ./src/__tests__/utils/sum.spec.ts \
-             $(circleci tests split)
-  # e2e:
-  #   executor: default
-  #   steps:
-  #     - checkout
-  #     - attach_workspace:
-  #         at: .
-  #     - run: yarn start
-  #     - run: yarn e2e
+            echo  circleci tests glob "/src/__tests__/**/*.spec.ts"
+            yarn vitest
+  e2e:
+    executor: default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn start
+      - run: yarn e2e
 
   build:
     executor: default
@@ -118,7 +101,6 @@ workflows:
   ci:
     jobs:
       - setup
-      - test_list
       - type-check:
           requires:
             - setup
@@ -128,10 +110,9 @@ workflows:
       - vitest:
           requires:
             - setup
-      # TODO: ci 環境で msw の起動できるようにする
-      # - e2e:
-      #     requires:
-      #       - setup
+      - e2e:
+          requires:
+            - setup
       - build:
           requires:
             - setup
