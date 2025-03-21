@@ -68,7 +68,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: |
+      - run:
           name: Run vitest
           command: |
             echo  $(circleci tests glob "/src/__tests__/**/*.spec.ts")
