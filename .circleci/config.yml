@@ -30,12 +30,11 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/todo-app
           paths:
-            - node_modules
+            - ./*
 
   type-check:
     executor: default
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run: yarn typecheck
@@ -43,30 +42,27 @@ jobs:
   lint:
     executor: default
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run: yarn lint
   vitest:
     executor: default
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run: yarn vitest
-  e2e:
-    executor: default
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run: yarn start
-      - run: yarn e2e
+  # e2e:
+  #   executor: default
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: .
+  #     - run: yarn start
+  #     - run: yarn e2e
 
   build:
     executor: default
     steps:
-      - checkout
       - attach_workspace:
           at: .
       - run: yarn build
@@ -108,9 +104,9 @@ workflows:
           requires:
             - setup
       # TODO: ci 環境で msw の起動できるようにする
-      - e2e:
-          requires:
-            - setup
+      # - e2e:
+      #     requires:
+      #       - setup
       - build:
           requires:
             - setup
