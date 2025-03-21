@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.13.3
-  browser-tools: circleci/browser-tools@1.4.8
+  slack: circleci/slack@5.1.1
+  browser-tools: circleci/browser-tools@1.5.3
 
 executors:
   default:
@@ -26,7 +26,7 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-            - ~./cache/yarn
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: /home/circleci/todo-app
           paths:
