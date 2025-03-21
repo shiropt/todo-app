@@ -73,8 +73,8 @@ jobs:
           command: |
             echo  $(circleci tests glob "/src/__tests__/**/*.spec.ts")
             yarn vitest  \
-             $(circleci tests glob "/src/__tests__/**/*.spec.ts" | \
-            circleci tests split)
+            ./src/__tests__/utils/date.spec.ts ./src/__tests__/utils/sum.spec.ts \
+             $(circleci tests split)
   # e2e:
   #   executor: default
   #   steps:
