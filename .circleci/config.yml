@@ -108,9 +108,9 @@ workflows:
           requires:
             - setup
       # TODO: ci 環境で msw の起動できるようにする
-      # - e2e:
-      #     requires:
-      #       - setup
+      - e2e:
+          requires:
+            - setup
       - build:
           requires:
             - setup
