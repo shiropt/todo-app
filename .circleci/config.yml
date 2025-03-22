@@ -64,7 +64,6 @@ jobs:
   e2e:
     executor: pw-noble-development
     steps:
-      - browser-tools/install-browser-tools
       - checkout
       - attach_workspace:
           at: .
