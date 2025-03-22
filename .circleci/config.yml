@@ -9,6 +9,9 @@ executors:
     docker:
       - image: cimg/node:lts
     working_directory: /home/circleci/todo-app
+  pw-noble-development:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.51.1-noble
 
 jobs:
   setup:
@@ -59,7 +62,7 @@ jobs:
             echo  circleci tests glob "/src/__tests__/**/*.spec.ts"
             yarn vitest
   e2e:
-    executor: default
+    executor: pw-noble-development
     steps:
       - browser-tools/install-browser-tools
       - checkout
@@ -68,7 +71,7 @@ jobs:
       - run:
           name: Run e2e tests
           command: |
-            yarn playwright install
+            yarn playwright install  --with-deps
             yarn start &
             yarn wait-on http://localhost:3000
             yarn e2e
