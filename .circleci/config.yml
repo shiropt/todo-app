@@ -65,8 +65,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: yarn start
-      - run: yarn e2e
+      - run:
+          name: Run e2e tests
+          command: |
+            yarn start &
+            yarn wait-on http://localhost:3000
+            yarn e2e
 
   build:
     executor: default
