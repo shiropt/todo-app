@@ -68,6 +68,7 @@ jobs:
       - run:
           name: Run e2e tests
           command: |
+            yarn playwright install
             yarn start &
             yarn wait-on http://localhost:3000
             yarn e2e
