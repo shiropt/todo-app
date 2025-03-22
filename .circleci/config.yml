@@ -61,7 +61,7 @@ jobs:
   e2e:
     executor: default
     steps:
-      - browser-tools/install-chrome
+      - browser-tools/install-browser-tools
       - checkout
       - attach_workspace:
           at: .
