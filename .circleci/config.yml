@@ -63,17 +63,23 @@ jobs:
             yarn vitest
   e2e:
     executor: pw-noble-development
+    parallelism: 2
     steps:
       - checkout
       - attach_workspace:
           at: .
       - run:
-          name: Run e2e tests
+          name: Install Playwright & dependencies
+          command: yarn playwright install --with-deps
+      - run:
+          name: Start dev server
           command: |
-            yarn playwright install  --with-deps
             yarn start &
             yarn wait-on http://localhost:3000
-            yarn e2e
+      - run:
+          name: Run e2e tests
+          command: |
+            SHARD="$((${CIRCLE_NODE_INDEX}+1))"; yarn e2e --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
 
   build:
     executor: default
