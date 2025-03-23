@@ -72,11 +72,10 @@ jobs:
           name: Install Playwright & dependencies
           command: yarn playwright install --with-deps
       - run:
-          name: Start dev server and run e2e tests
+          name: Run e2e tests
           command: |
-            yarn start &
-            yarn wait-on http://localhost:3000
-            SHARD="$((${CIRCLE_NODE_INDEX}+1))"; yarn e2e --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
+            SHARD="$((${CIRCLE_NODE_INDEX}+1))"; 
+            yarn e2e --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
 
   build:
     executor: default
