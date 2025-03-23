@@ -83,6 +83,7 @@ jobs:
   build:
     executor: default
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run: yarn build
