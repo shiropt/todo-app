@@ -1,23 +1,35 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.13.3
-  browser-tools: circleci/browser-tools@1.4.8
+  slack: circleci/slack@5.1.1
+  browser-tools: circleci/browser-tools@1.5.3
 
 executors:
   default:
     docker:
       - image: cimg/node:lts
     working_directory: /home/circleci/todo-app
+  pw-noble-development:
+    docker:
+      - image: mcr.microsoft.com/playwright:v1.51.1-noble
 
 jobs:
   setup:
     executor: default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
       - persist_to_workspace:
           root: /home/circleci/todo-app
           paths:
@@ -37,22 +49,36 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - run: yarn lint
+      - run: yarn lint --format junit -o reports/lint.xml
+      - store_test_results:
+          path: reports
   vitest:
+    parallelism: 2
     executor: default
     steps:
       - checkout
       - attach_workspace:
           at: .
-      - run: yarn vitest
+      - run:
+          name: Run vitest
+          command: |
+            echo  circleci tests glob "/src/__tests__/**/*.spec.ts"
+            yarn vitest
   e2e:
-    executor: default
+    executor: pw-noble-development
+    parallelism: 2
     steps:
       - checkout
       - attach_workspace:
           at: .
-      - run: yarn start
-      - run: yarn e2e
+      - run:
+          name: Install Playwright & dependencies
+          command: yarn playwright install --with-deps
+      - run:
+          name: Run e2e tests
+          command: |
+            SHARD="$((${CIRCLE_NODE_INDEX}+1))"; 
+            yarn e2e --shard=${SHARD}/${CIRCLE_NODE_TOTAL}
 
   build:
     executor: default
@@ -86,7 +112,6 @@ jobs:
       - run: yarn reg-suit
 
 workflows:
-  version: 2
   ci:
     jobs:
       - setup
@@ -99,10 +124,6 @@ workflows:
       - vitest:
           requires:
             - setup
-      # TODO: ci 環境で msw の起動できるようにする
-      # - e2e:
-      #     requires:
-      #       - setup
       - build:
           requires:
             - setup
@@ -116,3 +137,13 @@ workflows:
             - vitest
             - build
           context: SLACK_ACCESS_TOKEN
+  execute_e2e:
+    jobs:
+      - setup
+      - e2e:
+          requires:
+            - setup
+          filters:
+            branches:
+              only:
+                - main
