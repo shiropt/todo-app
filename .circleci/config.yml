@@ -33,11 +33,12 @@ jobs:
       - persist_to_workspace:
           root: /home/circleci/todo-app
           paths:
-            - ./*
+            - node_modules
 
   type-check:
     executor: default
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run: yarn typecheck
@@ -45,6 +46,7 @@ jobs:
   lint:
     executor: default
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run: yarn lint --format junit -o reports/lint.xml
@@ -54,6 +56,7 @@ jobs:
     parallelism: 2
     executor: default
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - run:
@@ -120,9 +123,6 @@ workflows:
       - vitest:
           requires:
             - setup
-      - e2e:
-          requires:
-            - setup
       - build:
           requires:
             - setup
@@ -136,3 +136,13 @@ workflows:
             - vitest
             - build
           context: SLACK_ACCESS_TOKEN
+  execute_e2e:
+    jobs:
+      - setup
+      - e2e:
+          requires:
+            - setup
+          filters:
+            branches:
+              only:
+                - main
