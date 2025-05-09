@@ -1,0 +1,48 @@
+name: bump_version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: リリースを作るバージョン番号
+        required: true
+        default: ""
+
+jobs:
+  bump_version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: create new branch
+        run: |
+          git checkout -b chore/release-v${{ github.event.inputs.version }}
+
+      - name: install dependencies
+        run: |
+          yarn install
+
+      - name: update version
+        run: |
+          yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
+
+      - name: commit and push
+        run: |
+          git add package.json yarn.lock
+          git commit -m "chore: bump version to v${{ github.event.inputs.version }}"
+          git push origin HEAD
+
+      - name: create version up PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: feat/bump-to-${{ github.event.inputs.version }}
+          title: "Bump to ${{ github.event.inputs.version }}"
+          body: "Bump to ${{ github.event.inputs.version }}"
+          base: master
