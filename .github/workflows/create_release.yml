@@ -1,0 +1,33 @@
+name: create_release_on_bump
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [master] # ←マージ対象ブランチ
+    # optional: 限定したい場合
+    # paths:
+    #   - 'package.json'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Bump to v')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.pull_request.title }}
+          name: ${{ github.event.pull_request.title }}
+          body: |
+            自動生成されたリリースノートです。
+            - PR: #${{ github.event.pull_request.number }}
+            - 作成者: ${{ github.event.pull_request.user.login }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
