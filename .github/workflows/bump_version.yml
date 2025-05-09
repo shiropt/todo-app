@@ -8,6 +8,10 @@ on:
         required: true
         default: ""
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   bump_version:
     runs-on: ubuntu-latest
@@ -26,6 +30,11 @@ jobs:
       - name: update version
         run: |
           yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
+
+      - name: push branch to remote
+        run: |
+          git checkout -b feat/bump-to-${{ github.event.inputs.version }}
+          git push origin feat/bump-to-${{ github.event.inputs.version }}
 
       - name: create version up PR
         uses: peter-evans/create-pull-request@v6
