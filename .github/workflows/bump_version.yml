@@ -43,3 +43,5 @@ jobs:
           title: "Bump to ${{ github.event.inputs.version }}"
           body: "Bump to ${{ github.event.inputs.version }}"
           base: master
+env:
+  GITHUB_TOKEN: ${{ secrets.PAT }}
