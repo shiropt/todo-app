@@ -34,16 +34,16 @@ jobs:
           yarn version --new-version ${{ github.event.inputs.version }} --no-git-tag-version
           cat package.json
 
-    #   - name: commit and push
-    #     run: |
-    #       git add package.json yarn.lock
-    #       git commit -m "chore: bump version to v${{ github.event.inputs.version }}"
-    #       git push origin HEAD
+      - name: commit and push
+        run: |
+          git add package.json yarn.lock
+          git commit -m "chore: bump version to v${{ github.event.inputs.version }}"
+          git push origin HEAD
 
-    #   - name: create version up PR
-    #     uses: peter-evans/create-pull-request@v6
-    #     with:
-    #       branch: feat/bump-to-${{ github.event.inputs.version }}
-    #       title: "Bump to ${{ github.event.inputs.version }}"
-    #       body: "Bump to ${{ github.event.inputs.version }}"
-    #       base: master
+      - name: create version up PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: feat/bump-to-${{ github.event.inputs.version }}
+          title: "Bump to ${{ github.event.inputs.version }}"
+          body: "Bump to ${{ github.event.inputs.version }}"
+          base: master
