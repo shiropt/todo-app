@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   create-release:
-    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Bump to v')
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.title, 'Bump to')
     runs-on: ubuntu-latest
 
     steps:
