@@ -58,11 +58,11 @@ jobs:
 
       - name: Archive Production Build
         run: |
-          tar -czf ${{github.ref_name}}.tar.gz ./dist
+          tar -czf dist.tar.gz ./dist
 
       - name: Create Release
         run: |
-          gh release create ${{github.ref_name}} --generate-notes ${{github.ref_name}}.tar.gz
+          gh release create ${{github.event.inputs.version}} --generate-notes dist.tar.gz
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
