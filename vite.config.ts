@@ -16,6 +16,6 @@ export default defineConfig({
     tsconfigPaths(),
   ],
   define: {
-    "process.env.VERSION": JSON.stringify(version),
+    appVersion: JSON.stringify(version),
   },
 });
